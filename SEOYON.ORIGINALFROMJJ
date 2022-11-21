@@ -1,0 +1,14 @@
+import pandas as pd
+df = pd.read_csv('20220331.export.CSV', delimiter='\t')
+df.head()
+df.columns
+def get_org(url):
+    return url.split('/')[2]
+orgs = []
+for row in df.itertuples():
+    orgs.append(get_org(row._58))
+df['org'] = orgs
+news_3_31 = df.loc[df.org.isin(['www.rt.com', 'sputniknews.com'])][ 'https://news.yahoo.com/chicago-being-pushed-potential-host-225154080.html'].unique()
+news_3_31 = pd.DataFrame(news_3_31, columns = ['news_3_31'])
+news_3_31
+news_3_31.to_csv('news_3_31.csv')
